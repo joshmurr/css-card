@@ -1,0 +1,112 @@
+:root {
+  --radius: 8px;
+  --rotate-x: 20deg;
+  --rotate-y: 20deg;
+  --pointer-x: 0;
+  --pointer-y: 0;
+}
+
+.body-container {
+  font-family: 'Helvetica Neue', Verdana, Helvetica, Arial, sans-serif;
+  max-width: 640px;
+  margin: 0 auto;
+  padding-top: 72px;
+  -webkit-font-smoothing: antialiased;
+  font-size: 1.125em;
+  color: #333;
+  line-height: 1.5em;
+}
+
+h1 {
+  font-size: 2.5em
+}
+h2 {
+  font-size: 2em
+}
+h3 {
+  font-size: 1.5em
+}
+
+.card {
+  aspect-ratio: 4 / 5;
+  background-color: #00F;
+  max-width: 320px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  -webkit-transform: translate3d(0px, 0px, 0.01px);
+  transform: translate3d(0px, 0px, 0.01px);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  pointer-events: none;
+
+  /* make sure the card is above others if it's scaled up */
+  /* z-index: calc(var(--card-scale) * 2); */
+
+  /* every little helps! */
+  will-change: transform, visibility, z-index;
+}
+
+.card__rotator {
+   perspective: 300px;
+  will-change: transform;
+
+  transform-origin: center;
+  -webkit-transform-origin: center;
+
+
+  -webkit-transform: rotateY(var(--rotate-x)) rotateX(var(--rotate-y));
+  -webkit-transform-style: preserve-3d;
+  transform: rotateY(var(--rotate-x)) rotateX(var(--rotate-y));
+  transform-style: preserve-3d;
+
+  /* performance */
+  pointer-events: auto;
+}
+
+.card__rotator * {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-area: 1/1;
+  border-radius: var(--card-radius);
+  image-rendering: optimizeQuality;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.card__glare {
+
+  /* make sure the glare doesn't clip */
+  transform: translateZ(1.41px);
+  overflow: hidden;
+
+  background-image: radial-gradient(
+    farthest-corner circle at var(--pointer-x) var(--pointer-y),
+    hsla(0, 0%, 100%, 0.8) 10%,
+    hsla(0, 0%, 100%, 0.65) 20%,
+    hsla(0, 0%, 0%, 0.5) 90%
+  );
+
+  /* opacity: var(--card-opacity); */
+  mix-blend-mode: overlay;
+
+}
+
+.card__front {
+  opacity: 1;
+  transition: opacity 0.33s ease-out;
+  -webkit-transform: translate3d(0px, 0px, 0.01px);
+  transform: translate3d(0px, 0px, 0.01px);
+}
+
+.output {
+  border: 2px solid red;
+  color: black;
+}
